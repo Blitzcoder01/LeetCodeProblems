@@ -1,0 +1,33 @@
+x=[1,2,3,4,5]
+y=[2,4,7,8.5,9]
+m=0
+m2=0
+
+s1=0
+s2=0
+for i in range(0,5):
+  s1= s1+x[i]
+  
+for j in range(0,5):
+  s2=s2+y[j]
+
+
+h=s1/5
+h2=s2/5
+for i in range(0,5):
+  m=m+ (y[i]-h2)*(x[i]-h)
+  m2= m2+(x[i]-h)**2
+f_m= m/m2;
+print(f_m)
+c=h2-f_m*h
+print(c)
+y_n=0;
+err=0;
+mse=0;
+sum=0;
+for i in range(0,5):
+  y_n=f_m*x[i] +c
+  err= y_n-y[i]
+  mse= (err)**2
+  sum= sum+mse
+print(sum/5)
