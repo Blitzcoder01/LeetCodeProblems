@@ -1,0 +1,45 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+class GradientDescentLinearRegression:
+    def __init__(self, learning_rate=0.01, iterations=1000):
+        self.learning_rate, self.iterations = learning_rate, iterations
+    
+    def fit(self, X, y):
+        b0 = 0
+        b1 = 0
+        n = X.shape[0]
+        for _ in range(self.iterations):
+            b0_deri = np.sum(b1*X + b0 - y)/n
+            b1_deri = np.sum(X*((b1*X + b0) - y))/n
+            b0 = b0 - (self.learning_rate*b0_deri)
+            b1 = b1 - (self.learning_rate*b1_deri)
+        self.b0, self.b1 = b0, b1
+    
+    def predict(self, X):
+        return self.b0 + self.b1*X
+    
+    def rmse(self, X): 
+        rmse = 0
+        n = X.shape[0]
+        for i in range(n):
+            y_pred = self.predict(X[i])
+            rmse += (y_pred - y[i])**2
+        rmse = np.sqrt(rmse/n)
+       
+        return rmse
+      
+
+data= pd.read_csv('/content/headbrain.csv')
+X= data['Head Size(cm^3)'].values/1000
+y= data['Brain Weight(grams)'].values/1000
+
+clf= GradientDescentLinearRegression()
+clf.fit(X,y)
+
+plt.scatter(X,y,color='black')
+plt.plot(X,clf.predict(X))
+rmse= clf.rmse(X)
+print(rmse)
