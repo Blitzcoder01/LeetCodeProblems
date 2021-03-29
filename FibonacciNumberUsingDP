@@ -1,0 +1,43 @@
+public class Fabonacci_mamorisation {
+    int max= 10;
+    int nil=-1;
+    int[] lookupTable= new int[max];
+    void initialize(){
+        for(int i= 0; i<max; i++){
+            lookupTable[i]=nil;
+        }
+    }
+
+    int calculateFabonaccie(int num) {
+
+        if (lookupTable[num] == nil) {
+            if(num<=1){
+                lookupTable[num]=num;
+            }
+            else{
+                lookupTable[num]= calculateFabonaccie(num-1)+ calculateFabonaccie(num-2);
+            }
+        }
+        return lookupTable[num];
+    }
+
+}
+
+
+
+//code of main.java file
+
+import  java.util.*;
+import  java.lang.*;
+
+public class main {
+
+    public static void main(String[] args){
+        Scanner sc= new Scanner(System.in);
+    Fabonacci_mamorisation fm= new Fabonacci_mamorisation();
+    int n=9;
+    fm.initialize();
+    System.out.print(fm.calculateFabonaccie(n) +" ,");
+
+    }
+}
